@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductsModel;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
     public function index() {
 
-        $products = [
-            "iPhone 14", "Samsung Galaxy s24", "Samsung Galaxy A54", "iPhone 13 pro"
-        ];
+        $last6products = ProductsModel::orderBy('id', 'desc')->take(6)->get();
 
-        return view("shop", compact("products"));
+        return view("shop", compact("last6products"));
     }
 }
