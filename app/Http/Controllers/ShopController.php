@@ -36,10 +36,5 @@ class ShopController extends Controller
         return redirect("/shop");
     }
 
-    public function listAllProducts() {
-
-        $products = ProductsModel::all();
-
-        return view("allProducts", compact("products"));
-    }
+   
 }
