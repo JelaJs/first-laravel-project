@@ -24,8 +24,8 @@
                 <img src="https://via.placeholder.com/50" alt="Product 1 Image" class="w-12 h-12 object-cover rounded-md">
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $product->description }}</td>
-                <td><a href="/admin/delete-product/{{$product->id}}">Delete</a></td>
-                <td><a href="">Update</a></td>
+                <td><a href="{{ route('deleteProduct', $product->id) }}">Delete</a></td>
+                <td><a href="{{ route('editProductView', ["product" => $product->id]) }}">Update</a></td>
             </tr>
           @endforeach
 

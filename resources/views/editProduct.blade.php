@@ -1,8 +1,8 @@
-@extends('layout')
+@extends("layout")
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <form class="bg-white shadow-md rounded-lg p-6 space-y-6 max-w-lg mx-auto" method="POST" action="{{ route("addProduct") }}">
+    <form class="bg-white shadow-md rounded-lg p-6 space-y-6 max-w-lg mx-auto" method="POST" action="{{ route("editProduct") }}">
         @if ($errors->any())
             <p>Error: {{ $errors->first() }}</p>
         @endif
@@ -16,7 +16,7 @@
                 name="name"
                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3"
                 placeholder="Enter product name" 
-                value="{{ old("name") }}"
+                value="{{ $singleProduct->name }}"
                 required>
         </div>
         <div>
@@ -26,7 +26,7 @@
                 name="amount"
                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3"
                 placeholder="Add Amount" 
-                value="{{ old("amount") }}"
+                value="{{ $singleProduct->amount }}"
                 required>
         </div>
         <div>
@@ -36,7 +36,7 @@
                 name="price"
                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3"
                 placeholder="Add price" 
-                value="{{ old("price") }}"
+                value="{{ $singleProduct->price }}"
                 required>
         </div>
         <div>
@@ -46,13 +46,16 @@
                 rows="4" 
                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-3"
                 placeholder="Write your message" 
-                required></textarea>
+                required>{{ $singleProduct->description }}</textarea>
+        </div>
+        <div>
+            <input type="hidden" name="id" value="{{ $singleProduct->id }}">
         </div>
         <div>
             <button 
                 type="submit" 
                 class="w-full bg-blue-500 text-white font-semibold rounded-lg p-3 hover:bg-blue-600 transition duration-300">
-                Add Product
+                Edit Product
             </button>
         </div>
     </form>
