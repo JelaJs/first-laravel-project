@@ -45,26 +45,18 @@ class ProductsController extends Controller
         return redirect()->back();
     }
 
-    public function editView($product) {
-        $singleProduct = ProductsModel::where(["id"=> $product])->first();
-        
-        if($singleProduct === null) {
-            die("Product with this Id doesn't exist");
-        }
+    public function editView(ProductsModel $product) {
 
-       return view("editProduct", compact("singleProduct"));
+       return view("editProduct", compact("product"));
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request, ProductsModel $product) {
         $request->validate([
             "name" => "required|string|min:3|max:64|unique:products",  
             "amount" => "required|integer|",
             "price" => "required|numeric",
-            "description" => "required|string",
-            "id" => "required|integer|min:1"
+            "description" => "required|string"
         ]);
-
-        $product = ProductsModel::where(["id" => $request->id])->first();
         
         $product->update([
             "name"=> $request->get("name"),

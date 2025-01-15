@@ -10,10 +10,6 @@ class HomepageController extends Controller
     
     public function index() {
 
-        $hour = date("H");
-
-        $curDate = date("Y-m-d");
-
-        return view("welcome", compact("curDate", "hour"));
+        return view("welcome");
     }
 }
