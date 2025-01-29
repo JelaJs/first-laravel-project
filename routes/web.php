@@ -34,6 +34,15 @@ Route::middleware(['auth', AdminCheckMiddleware::class])->prefix("admin")->group
 Route::post("/send-message", [ContactController::class,"sendMessage"]);
 Route::post("/add-product", [ProductsController::class,"addProduct"])->name('addProduct');
 
+
+
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////
 Route::get('/dashboard', function () {
     return view('dashboard');
