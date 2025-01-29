@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRates;
+use Carbon\Carbon;
+use Date;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -12,7 +15,7 @@ class GetCurrencyCourse extends Command
      *
      * @var string
      */
-    protected $signature = 'currency:get-currency-course';
+    protected $signature = 'currency:get-course';
 
     /**
      * The console command description.
@@ -26,19 +29,24 @@ class GetCurrencyCourse extends Command
      */
     public function handle()
     {
-        //$currency = $this->argument('currency');
-        $urlEUR = env('CURRENCY_BASE_URL').env('CURRENCY_API_KEY').'/latest/EUR';
-        $urlUSD = env('CURRENCY_BASE_URL').env('CURRENCY_API_KEY').'/latest/USD';
 
-        $responseEUR = Http::get($urlEUR);
-        $responseUSD = Http::get($urlUSD);
+        foreach(ExchangeRates::AVAILABLE_CURRENCIES as $currency) {
+            $url = env('CURRENCY_BASE_URL').env('CURRENCY_API_KEY')."/latest/$currency";
 
-        $courseEUR = $responseEUR->json();
-        $courseEURRSD = $courseEUR['conversion_rates']['RSD'];
+            $response = Http::get($url);
+            $course = $response->json();
+            $course = $course["conversion_rates"]['RSD'];
 
-        $courseUSD = $responseUSD->json();
-        $courseUSDRSD = $courseUSD['conversion_rates']['RSD'];
+            $todayCourse = ExchangeRates::getCurrencyForToday($currency);
 
-        dd($courseUSDRSD);
+            if($todayCourse !== null) {
+                continue;
+            }
+
+            ExchangeRates::create([
+                'currency' => $currency,
+                'value' => $course
+            ]);
+        }
     }
 }
