@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditMessageRequest;
+use App\Http\Requests\SendMessageRequest;
 use App\Models\ContactModel;
+use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
+    private $contactRepo;
+
+    public function __construct() {
+
+        $this->contactRepo = new ContactRepository();
+    }
+
     public function index() {
         return view("contact");
     }
@@ -17,24 +28,16 @@ class ContactController extends Controller
         return view("allContacts", compact("allContacts"));
     }
 
-    public function sendMessage(Request $request) {
-        $request->validate([
-            "email" => "required|email",
-            "subject" => "required|string|max:64",
-            "message" => "required|string|min:5"
-        ]);
-
-        ContactModel::create([
-            "email" => $request->email,
-            "subject" => $request->subject,
-            "message"=> $request->message
-        ]);
+    public function sendMessage(SendMessageRequest $request) {
+        
+        $this->contactRepo->createMessage($request);
 
         return redirect("/");
     }
 
     public function delete($contact) {
-        $singleContact = ContactModel::where(["id"=> $contact])->first();
+        
+        $singleContact = $this->contactRepo->getSingleContact($contact);
 
         if($singleContact === null) { 
             die("This contact doesn't exist");
@@ -46,7 +49,7 @@ class ContactController extends Controller
     }
 
     public function editView($contact) {
-        $singleContact = ContactModel::where(["id"=> $contact])->first();
+        $singleContact = $this->contactRepo->getSingleContact($contact);
         
         if($singleContact === null) {
             die("Contact with this Id doesn't exist");
@@ -55,21 +58,11 @@ class ContactController extends Controller
        return view("editContact", compact("singleContact"));
     }
 
-    public function edit(Request $request) {
-        $request->validate([
-            "email" => "required|email",
-            "subject" => "required|string|max:64",
-            "message" => "required|string|min:5",
-            "id" => "required|integer|min:1"
-        ]);
-
-        $contact = ContactModel::where(["id" => $request->id])->first();
+    public function edit(EditMessageRequest $request) {
+       
+        $contact = $this->contactRepo->getSingleContact($request->id);
         
-        $contact->update([
-            "email" => $request->email,
-            "subject" => $request->subject,
-            "message" => $request->message
-        ]);
+        $this->contactRepo->updateMessage($request, $contact);
 
         return redirect()->route("allContacts");
     }

@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsModel;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+
+    private $productRepo;
+    public function __construct() {
+
+        $this->productRepo = new ProductRepository();
+    }
+
     public function index() {
 
-        $last6products = ProductsModel::orderBy('id', 'desc')->take(6)->get();
+        $this->productRepo->getLast6Products();
 
         return view("shop", compact("last6products"));
     }

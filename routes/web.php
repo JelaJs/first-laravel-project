@@ -22,7 +22,7 @@ Route::middleware(['auth', AdminCheckMiddleware::class])->prefix("admin")->group
     Route::post("/edit-contact", [ContactController::class,"edit"])->name("editContact");
     
     Route::get("/add-product", [ShopController::class,"productForm"]);
-    Route::get("/products", [ProductsController::class,"index"])->middleware('auth')->name("allProducts");
+    Route::get("/products", [ProductsController::class,"index"])->name("allProducts");
     Route::get("/delete-product/{product}", [ProductsController::class,"delete"])->name("deleteProduct");
     Route::get("/edit-product/{product}", [ProductsController::class,"editView"])->name("editProductView");
     Route::post("/edit-product/{product}", [ProductsController::class,"edit"])->name("editProduct");
