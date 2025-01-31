@@ -23,11 +23,6 @@ class ProductRepository {
         ]);
     }
 
-    public function getSingleProduct($product) {
-
-        return $this->productModel->where(["id"=> $product])->first();
-    }
-
     public function editProduct($request, $product) {
 
         $product->update([

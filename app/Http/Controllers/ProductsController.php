@@ -32,15 +32,13 @@ class ProductsController extends Controller
         return redirect()->route("allProducts");
     }
 
-    public function delete($product) {
+    public function delete(ProductsModel $product) {
 
-        $singleProduct = $this->productRepo->getSingleProduct($product);
-
-        if($singleProduct === null) { 
+        if($product === null) { 
             die("This product doesn't exist");
         }
 
-        $singleProduct->delete();
+        $product->delete();
 
         return redirect()->back();
     }
