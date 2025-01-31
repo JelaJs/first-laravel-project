@@ -19,8 +19,8 @@
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $contact->subject }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $contact->message }}</td>
                         <td class="px-6 py-4 text-sm">
-                        <td><a href="{{ route('deleteContact', $contact->id) }}">Delete</a></td>
-                        <td><a href="{{ route('editContactView', ['contact' => $contact->id]) }}">Update</a></td>
+                        <td><a href="{{ route('contacts.delete', $contact->id) }}">Delete</a></td>
+                        <td><a href="{{ route('contacts.editView', ['contact' => $contact->id]) }}">Update</a></td>
                     </tr>
                   @endforeach
                 </tbody>

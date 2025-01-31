@@ -64,6 +64,6 @@ class ContactController extends Controller
         
         $this->contactRepo->updateMessage($request, $contact);
 
-        return redirect()->route("allContacts");
+        return redirect()->route("contacts.all");
     }
 }

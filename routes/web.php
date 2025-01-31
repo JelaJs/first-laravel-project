@@ -24,19 +24,18 @@ Route::get("/shop", [ShopController::class,"index"]);
 ///ADMIN
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix("admin")->group(function () { 
 
-    Route::controller(ContactController::class)->prefix('/contacts')->group(function () {
-        Route::get("/all", "getAllContacts")->name("allContacts");
-        Route::get("/delete/{contact}", "delete")->name("deleteContact");
-        Route::get("/edit-form/{contact}", "editView")->name("editContactView");
-        Route::post("/edit", "edit")->name("editContact");
+    Route::controller(ContactController::class)->prefix('/contacts')->name('contacts.')->group(function () {
+        Route::get("/all", "getAllContacts")->name("all");
+        Route::get("/delete/{contact}", "delete")->name("delete");
+        Route::get("/edit-form/{contact}", "editView")->name("editView");
+        Route::post("/edit", "edit")->name("edit");
     });
-
    
     Route::controller(ProductsController::class)->prefix('products')->group(function () { 
-        Route::get("/all", "index")->name("allProducts");
-        Route::get("/delete/{product}", "delete")->name("deleteProduct");
-        Route::get("/edit/{product}", "editView")->name("editProductView");
-        Route::post("/edit/{product}", "edit")->name("editProduct");
+        Route::get("/all", "index")->name("products.all");
+        Route::get("/delete/{product}", "delete")->name("products.delete");
+        Route::get("/edit/{product}", "editView")->name("products.editView");
+        Route::post("/edit/{product}", "edit")->name("products.edit");
     });
     
     Route::get("/add-product", [ShopController::class,"productForm"]);

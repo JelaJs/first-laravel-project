@@ -29,7 +29,7 @@ class ProductsController extends Controller
 
        $this->productRepo->createNew($request);
 
-        return redirect()->route("allProducts");
+        return redirect()->route("products.all");
     }
 
     public function delete(ProductsModel $product) {
@@ -52,6 +52,6 @@ class ProductsController extends Controller
         
         $this->productRepo->editProduct($request, $product);
 
-        return redirect()->route("allProducts");
+        return redirect()->route("products.all");
     }
 }
