@@ -11,28 +11,39 @@ use Illuminate\Support\Facades\Route;
 Route::view("/about", "about");
 
 Route::get("/", [HomepageController::class,"index"]);
+
 Route::get("/contact", [ContactController::class,"index"]);
+Route::post("/send-message", [ContactController::class,"sendMessage"]);
+
+Route::post("/add-product", [ProductsController::class,"addProduct"])->name('addProduct');
+
 Route::get("/shop", [ShopController::class,"index"]);
 
+
+
+///ADMIN
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix("admin")->group(function () { 
 
-    Route::get("/all-contacts", [ContactController::class,"getAllContacts"])->name("allContacts");
-    Route::get("/delete-contact/{contact}", [ContactController::class,"delete"])->name("deleteContact");
-    Route::get("/edit-contact-form/{contact}", [ContactController::class,"editView"])->name("editContactView");
-    Route::post("/edit-contact", [ContactController::class,"edit"])->name("editContact");
+    Route::controller(ContactController::class)->group(function () {
+        Route::get("/all-contacts", "getAllContacts")->name("allContacts");
+        Route::get("/delete-contact/{contact}", "delete")->name("deleteContact");
+        Route::get("/edit-contact-form/{contact}", "editView")->name("editContactView");
+        Route::post("/edit-contact", "edit")->name("editContact");
+    });
+
+   
+    Route::controller(ProductsController::class)->group(function () { 
+        Route::get("/products", "index")->name("allProducts");
+        Route::get("/delete-product/{product}", "delete")->name("deleteProduct");
+        Route::get("/edit-product/{product}", "editView")->name("editProductView");
+        Route::post("/edit-product/{product}", "edit")->name("editProduct");
+    });
     
     Route::get("/add-product", [ShopController::class,"productForm"]);
-    Route::get("/products", [ProductsController::class,"index"])->name("allProducts");
-    Route::get("/delete-product/{product}", [ProductsController::class,"delete"])->name("deleteProduct");
-    Route::get("/edit-product/{product}", [ProductsController::class,"editView"])->name("editProductView");
-    Route::post("/edit-product/{product}", [ProductsController::class,"edit"])->name("editProduct");
-
 });
 
 
 
-Route::post("/send-message", [ContactController::class,"sendMessage"]);
-Route::post("/add-product", [ProductsController::class,"addProduct"])->name('addProduct');
 
 
 
