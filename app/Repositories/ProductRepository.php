@@ -37,9 +37,4 @@ class ProductRepository {
             "description"=> $request->get("description")
         ]);
     }
-
-    public function getLast6Products() {
-
-        return $this->productModel->orderBy('id', 'desc')->take(6)->get();
-    }
 }

@@ -9,15 +9,9 @@ use Illuminate\Http\Request;
 class ShopController extends Controller
 {
 
-    private $productRepo;
-    public function __construct() {
-
-        $this->productRepo = new ProductRepository();
-    }
-
     public function index() {
 
-        $this->productRepo->getLast6Products();
+        $last6products = ProductsModel::orderBy('id', 'desc')->take(6)->get();
 
         return view("shop", compact("last6products"));
     }
