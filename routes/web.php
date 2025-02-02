@@ -31,11 +31,11 @@ Route::middleware(['auth', AdminCheckMiddleware::class])->prefix("admin")->group
         Route::post("/edit", "edit")->name("edit");
     });
    
-    Route::controller(ProductsController::class)->prefix('products')->group(function () { 
-        Route::get("/all", "index")->name("products.all");
-        Route::get("/delete/{product}", "delete")->name("products.delete");
-        Route::get("/edit/{product}", "editView")->name("products.editView");
-        Route::post("/edit/{product}", "edit")->name("products.edit");
+    Route::controller(ProductsController::class)->prefix('products')->name('products.')->group(function () { 
+        Route::get("/all", "index")->name("all");
+        Route::get("/delete/{product}", "delete")->name("delete");
+        Route::get("/edit/{product}", "editView")->name("editView");
+        Route::post("/edit/{product}", "edit")->name("edit");
     });
     
     Route::get("/add-product", [ShopController::class,"productForm"]);
