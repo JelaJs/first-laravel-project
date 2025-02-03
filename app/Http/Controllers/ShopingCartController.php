@@ -18,7 +18,10 @@ class ShopingCartController extends Controller
 
     public function addToCart(CartAddRequest $request) {
 
-        Session::put("product", [$request->id => $request->amount]);
+        Session::push("product", [
+            "product_id" => $request->id,
+            "amount" => $request->amount
+        ]);
 
         return redirect()->route("cart.list");
     }

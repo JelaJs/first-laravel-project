@@ -3,8 +3,8 @@
 @section('content')
 
     <ul>
-        @foreach ($cart as $product => $amount)
-            <li><p>Id: {{$product}} - Amount:{{$amount}}</p></li>
+        @foreach ($cart as $product)
+            <li><p>Id: {{$product['product_id']}} Amount {{$product['amount']}}</p></li>
         @endforeach
     </ul>
 
