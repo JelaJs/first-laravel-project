@@ -14,17 +14,12 @@ class ShopingCartController extends Controller
     public function index() {
 
         $cart = Session::get('product');
-        $products = [];
-
-        foreach($cart as $product) {
-            
-            $product = ProductsModel::where('id', $product['product_id'])->first();
-            array_push($products, $product);
-        }
-
-        //$product = ProductsModel::where('id', $request->id)->get();
+        
+        $productIds = array_column(Session::get('product'), 'product_id'); //iz niza Sessiong::get('product), izvuci nam vrednosti za key product_id
+        $products = ProductsModel::whereIn('id', $productIds)->get();
 
         return view("cart", [
+            "cart" => Session::get('product'),
             "products" => $products
         ]);
     }
