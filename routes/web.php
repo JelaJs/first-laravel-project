@@ -5,6 +5,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopingCartController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ Route::post("/send-message", [ContactController::class,"sendMessage"]);
 Route::post("/add-product", [ProductsController::class,"addProduct"])->name('addProduct');
 
 Route::get("/shop", [ShopController::class,"index"]);
+Route::get("/shop/product/{product}", [ShopController::class, "permalink"])->name("shop.permalink");
+Route::post("/cart/add", [ShopingCartController::class, "addToCart"])->name("cart.add");
+Route::get("/cart", [ShopingCartController::class, "index"])->name('cart.list');
 
 
 

@@ -19,4 +19,11 @@ class ShopController extends Controller
     public function productForm() {
         return view("productForm");
     }
+
+    public function permalink(ProductsModel $product) {
+
+        return view("shopProduct", [
+            "product" => $product
+        ]);
+    }
 }

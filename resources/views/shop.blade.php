@@ -8,6 +8,7 @@
                 <p class="text-gray-700 font-medium">Description - {{ $product['description'] }}</p>
                 <p class="text-gray-700 font-medium">Amount - {{ $product['amount'] }}</p>
                 <p class="text-gray-700 font-medium">Price - {{ $product['price'] }}</p>
+                <a href="{{ Route('shop.permalink', $product->id) }}">See More</a>
             </li>
         @endforeach
     </ul>
