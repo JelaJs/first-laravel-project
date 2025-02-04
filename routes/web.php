@@ -22,7 +22,7 @@ Route::get("/shop", [ShopController::class,"index"]);
 Route::get("/shop/product/{product}", [ShopController::class, "permalink"])->name("shop.permalink");
 Route::post("/cart/add", [ShopingCartController::class, "addToCart"])->name("cart.add");
 Route::get("/cart", [ShopingCartController::class, "index"])->name('cart.list');
-
+Route::get('/cart/order', [ShopingCartController::class, "order"])->name('cart.order');
 
 
 ///ADMIN
