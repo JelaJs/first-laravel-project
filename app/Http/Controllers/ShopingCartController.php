@@ -12,15 +12,23 @@ class ShopingCartController extends Controller
 {
 
     public function index() {
-
-        $cart = Session::get('product');
         
-        $productIds = array_column(Session::get('product'), 'product_id'); //iz niza Sessiong::get('product), izvuci nam vrednosti za key product_id
-        $products = ProductsModel::whereIn('id', $productIds)->get();
+        $combined = [];
+        foreach(Session::get('product') as $item) {
+
+            $product = ProductsModel::firstWhere('id', $item['product_id']);
+            if($product) {
+                $combined[] = [
+                    'name' => $product->name,
+                    'amount' => $item['amount'],
+                    'price' => $product->price,
+                    'totalPrice' => $product->price * $item['amount']
+                ];
+            }
+        }
 
         return view("cart", [
-            "cart" => Session::get('product'),
-            "products" => $products
+            "combined" => $combined,
         ]);
     }
 
@@ -34,7 +42,7 @@ class ShopingCartController extends Controller
 
         Session::push("product", [
             "product_id" => $request->id,
-            "amount" => $request->amount
+            "amount" => $request->amount,
         ]);
 
         return redirect()->route("cart.list");

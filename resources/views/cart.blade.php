@@ -3,8 +3,8 @@
 @section('content')
 
     <ul>
-        @foreach ($products as $product)
-            <li><p>{{$product['name']}} Amount: {{$product['amount']}} Price: {{$product['price']}} $</p></li>
+        @foreach ($combined as $product)
+            <li><p>{{$product['name']}} - Amount: {{$product['amount']}} - Price: {{$product['price']}} - Total Price: {{$product['totalPrice']}}</p></li>
         @endforeach
     </ul>
 
